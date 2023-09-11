@@ -17,7 +17,7 @@ func main() {
 		PORT = "8080"
 	}
 	handler := gin.Default()
-	handler.GET("/search/ping", func(c *gin.Context) {
+	handler.GET("/search?ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
 	handler.POST("/search", func(ctx *gin.Context) {
