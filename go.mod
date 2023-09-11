@@ -1,4 +1,4 @@
-module github.com/acheong08/DuckDuckGo-API
+module github.com/dengchangdong/DuckDuckGo-API
 
 go 1.19
 
