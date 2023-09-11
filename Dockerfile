@@ -26,6 +26,9 @@ FROM scratch
 # Set the working directory
 WORKDIR /app
 
+# Copy ca-certificates
+COPY ./ca-certificates.crt /etc/ssl/certs/
+
 # Copy the built Go binary from the builder stage
 COPY --from=builder /app/DockDuckGo-API /app/DockDuckGo-API
 
