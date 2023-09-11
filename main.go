@@ -42,7 +42,7 @@ func main() {
       search.Limit, _ = strconv.Atoi(limit)
     }
     // Get text parameter
-    text := ctx.Query("text", "false")
+    text := ctx.DefaultQuery("text", "false")
     isText := strings.ToLower(text) == "true"
 
     // Get results
