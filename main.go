@@ -3,7 +3,6 @@ package main
 import (
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/dengchangdong/DuckDuckGo-API/duckduckgo"
 	"github.com/dengchangdong/DuckDuckGo-API/typings"
