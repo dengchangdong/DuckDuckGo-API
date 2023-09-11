@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/acheong08/DuckDuckGo-API/duckduckgo"
+	"github.com/dengchangdong/DuckDuckGo-API/duckduckgo"
 	"github.com/dengchangdong/DuckDuckGo-API/typings"
 	"github.com/acheong08/endless"
 	"github.com/gin-gonic/gin"
