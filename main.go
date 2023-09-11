@@ -81,8 +81,8 @@ func main() {
 		}
 
 		// Check if 'text' parameter is set to 'true'
-		textParam := ctx.DefaultQuery("text", "false")
-		if textParam == "true" {
+		search.Text := ctx.DefaultQuery("text", "false")
+		if search.Text == "true" {
 			// Combine snippet fields into a single text
 			var combinedText []string
 			for _, result := range results {
