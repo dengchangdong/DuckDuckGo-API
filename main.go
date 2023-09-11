@@ -44,20 +44,8 @@ func main() {
 			results = results[:search.Limit]
 		}
 
-		// Check if 'text' parameter is set to 'true'
-		textParam := ctx.DefaultQuery("text", "false")
-		if textParam == "true" {
-			// Combine snippet fields into a single text
-			var combinedText []string
-			for _, result := range results {
-				combinedText = append(combinedText, result.Snippet)
-			}
-			mergedSnippet := strings.Join(combinedText, " ")
-			ctx.String(200, mergedSnippet)
-		} else {
-			// Return results as JSON
-			ctx.JSON(200, results)
-		}
+		// Return results
+		ctx.JSON(200, results)
 	})
 	handler.GET("/search", func(ctx *gin.Context) {
 		// Map request to Search struct
