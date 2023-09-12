@@ -12,6 +12,11 @@ import (
 	"github.com/anaskhan96/soup"
 )
 
+// Define a new struct for the JSON format
+type JSONResult struct {
+	Result []typings.Result `json:"result"`
+}
+
 func get_html(search typings.Search) (string, error) {
 	var base_url string = "html.duckduckgo.com"
 	// POST form data
@@ -82,15 +87,10 @@ func parse_html(html string) ([]typings.Result, error) {
 			Snippet: snippet,
 		})
 	}
-	
-	// Create a map with the "result" key
-	resultMap := map[string][]typings.Result{
-		"result": final_results,
-	}
-	return resultMap, nil
+	return final_results, nil
 }
 
-func Get_results(search typings.Search) ([]typings.Result, error) {
+func Get_results(search typings.Search) ([]byte, error) {
 	html, err := get_html(search)
 	if err != nil {
 		return nil, err
@@ -99,5 +99,15 @@ func Get_results(search typings.Search) ([]typings.Result, error) {
 	if err != nil {
 		return nil, err
 	}
-	return results, nil
+
+	// Create JSONResult struct and populate it with the results
+	jsonResults := JSONResult{Result: results}
+
+	// Marshal the JSONResult struct into JSON format
+	jsonData, err := json.Marshal(jsonResults)
+	if err != nil {
+		return nil, err
+	}
+
+	return jsonData, nil
 }
