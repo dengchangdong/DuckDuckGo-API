@@ -58,7 +58,7 @@ func main() {
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": resultString})
+			ctx.JSON(200, gin.H{"result": resultString})
 		}
 	})
 	handler.GET("/search", func(ctx *gin.Context) {
