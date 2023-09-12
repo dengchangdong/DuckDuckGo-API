@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"encoding/json"
 
 	"github.com/dengchangdong/DuckDuckGo-API/typings"
 	"github.com/dengchangdong/DuckDuckGo-API/utils"
