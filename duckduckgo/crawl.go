@@ -89,16 +89,28 @@ func parse_html(html string) ([]typings.Result, error) {
 	return final_results, nil
 }
 
-func Get_results(search typings.Search) (ResultResponse, error) {
+
+func Get_results(search typings.Search) ([]typings.Result, error) {
 	html, err := get_html(search)
 	if err != nil {
-		return ResultResponse{}, err
+		return nil, err
 	}
 	results, err := parse_html(html)
 	if err != nil {
-		return ResultResponse{}, err
+		return nil, err
+	}
+	return results, nil
+}
+
+func Get_results(search typings.Search) (ResultResponse, error) {
+	html, err := get_html(search)
+	if err != nil {
+		return nil, err
+	}
+	results, err := ResultResponse{Results: results}
+	if err != nil {
+		return nil, err
 	}
 
-	response := ResultResponse{Results: results}
-	return response, nil
+	return results, nil
 }
