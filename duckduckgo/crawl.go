@@ -6,16 +6,11 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"encoding/json"
 
 	"github.com/dengchangdong/DuckDuckGo-API/typings"
 	"github.com/dengchangdong/DuckDuckGo-API/utils"
 	"github.com/anaskhan96/soup"
 )
-
-type JSONResponse struct {
-	Result []typings.Result `json:"result"`
-}
 
 func get_html(search typings.Search) (string, error) {
 	var base_url string = "html.duckduckgo.com"
@@ -90,24 +85,14 @@ func parse_html(html string) ([]typings.Result, error) {
 	return final_results, nil
 }
 
-func Get_results(search typings.Search) ([]byte, error) {
+func Get_results(search typings.Search) ([]typings.Result, error) {
 	html, err := get_html(search)
 	if err != nil {
 		return nil, err
 	}
-	jsonData, err := parse_html(html)
+	results, err := parse_html(html)
 	if err != nil {
 		return nil, err
 	}
-
-	// 将结果封装到JSONResponse结构体中
-	jsonResponse := JSONResponse{Result: jsonData}
-
-	// 对JSONResponse进行JSON编码
-	results, err := json.Marshal(jsonResponse)
-	if err != nil {
-		return nil, err
-	}
-
 	return results, nil
 }
