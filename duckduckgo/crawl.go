@@ -82,7 +82,12 @@ func parse_html(html string) ([]typings.Result, error) {
 			Snippet: snippet,
 		})
 	}
-	return final_results, nil
+	
+	// Create a map with the "result" key
+	result_map := map[string][]typings.Result{
+		"result": final_results,
+	}
+	return result_map, nil
 }
 
 func Get_results(search typings.Search) ([]typings.Result, error) {
