@@ -12,8 +12,8 @@ import (
 	"github.com/anaskhan96/soup"
 )
 
-type ResultResponse struct {
-	Results []typings.Result `json:"result"`
+type JSONResponse struct {
+	Result []typings.Result `json:"result"`
 }
 
 func get_html(search typings.Search) (string, error) {
@@ -89,25 +89,21 @@ func parse_html(html string) ([]typings.Result, error) {
 	return final_results, nil
 }
 
-
-func Get_results(search typings.Search) ([]typings.Result, error) {
+func Get_results(search typings.Search) ([]byte, error) {
 	html, err := get_html(search)
 	if err != nil {
 		return nil, err
 	}
-	results, err := parse_html(html)
+	jsonData, err := parse_html(html)
 	if err != nil {
 		return nil, err
 	}
-	return results, nil
-}
 
-func Get_results(search typings.Search) (ResultResponse, error) {
-	html, err := get_html(search)
-	if err != nil {
-		return nil, err
-	}
-	results, err := ResultResponse{Results: results}
+	// 将结果封装到JSONResponse结构体中
+	jsonResponse := JSONResponse{Result: jsonData}
+
+	// 对JSONResponse进行JSON编码
+	results, err := json.Marshal(jsonResponse)
 	if err != nil {
 		return nil, err
 	}
