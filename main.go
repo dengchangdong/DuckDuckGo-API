@@ -96,10 +96,16 @@ func main() {
 			results = results[:search.Limit]
 		}
 
-		// Create a JSON object with a "result" field containing the results
-		response := gin.H{"result": results}
-		
-		// Return results as JSON
+		// Concatenate all snippet values into a single string, separated by '\n'
+		var resultString string
+		for _, result := range results {
+		    resultString += result["snippet"].(string) + "\n"
+		}
+
+		// Create a JSON response object
+		response := gin.H{"result": resultString}
+
+		// Return the JSON response
 		ctx.JSON(200, response)
 	})
 
