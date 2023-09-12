@@ -6,16 +6,14 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
-	"encoding/json"
 
 	"github.com/dengchangdong/DuckDuckGo-API/typings"
 	"github.com/dengchangdong/DuckDuckGo-API/utils"
 	"github.com/anaskhan96/soup"
 )
 
-// Define a new struct for the JSON format
-type JSONResult struct {
-	Result []typings.Result `json:"result"`
+type ResultResponse struct {
+	Results []typings.Result `json:"result"`
 }
 
 func get_html(search typings.Search) (string, error) {
@@ -91,24 +89,16 @@ func parse_html(html string) ([]typings.Result, error) {
 	return final_results, nil
 }
 
-func Get_results(search typings.Search) ([]byte, error) {
+func Get_results(search typings.Search) (ResultResponse, error) {
 	html, err := get_html(search)
 	if err != nil {
-		return nil, err
+		return ResultResponse{}, err
 	}
 	results, err := parse_html(html)
 	if err != nil {
-		return nil, err
+		return ResultResponse{}, err
 	}
 
-	// Create JSONResult struct and populate it with the results
-	jsonResults := JSONResult{Result: results}
-
-	// Marshal the JSONResult struct into JSON format
-	jsonData, err := json.Marshal(jsonResults)
-	if err != nil {
-		return nil, err
-	}
-
-	return jsonData, nil
+	response := ResultResponse{Results: results}
+	return response, nil
 }
