@@ -17,7 +17,7 @@ func main() {
 		PORT = "8080"
 	}
 	handler := gin.Default()
-	handler.GET("/search?ping", func(c *gin.Context) {
+	handler.GET("/search/ping", func(c *gin.Context) {
 		c.String(200, "pong")
 	})
 	handler.POST("/search", func(ctx *gin.Context) {
@@ -42,19 +42,8 @@ func main() {
 		if search.Limit > 0 && search.Limit < len(results) {
 			results = results[:search.Limit]
 		}
-
-		// Check if 'text' parameter is set to 'true'
-		if ctx.Query("text") == "true" {
-			// Merge snippet fields into a single text
-			var mergedSnippet string
-			for _, result := range results {
-				mergedSnippet += result.Snippet + " "
-			}
-			ctx.String(200, mergedSnippet)
-		} else {
-			// Return results as JSON
-			ctx.JSON(200, results)
-		}
+		// Return results
+		ctx.JSON(200, results)
 	})
 	handler.GET("/search", func(ctx *gin.Context) {
 		// Map request to Search struct
@@ -88,19 +77,8 @@ func main() {
 		if search.Limit > 0 && search.Limit < len(results) {
 			results = results[:search.Limit]
 		}
-
-		// Check if 'text' parameter is set to 'true'
-		if ctx.Query("text") == "true" {
-			// Merge snippet fields into a single text
-			var mergedSnippet string
-			for _, result := range results {
-				mergedSnippet += result.Snippet + " "
-			}
-			ctx.String(200, mergedSnippet)
-		} else {
-			// Return results as JSON
-			ctx.JSON(200, results)
-		}
+		// Return results
+		ctx.JSON(200, results)
 	})
 
 	endless.ListenAndServe(HOST+":"+PORT, handler)
