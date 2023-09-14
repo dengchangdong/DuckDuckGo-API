@@ -50,15 +50,15 @@ func main() {
 		}
 
 		// Return results
-		resultList := ctx.Query("list")
-		if resultList == "" || resultList == "true" {
-			ctx.JSON(200, results)
-		} else {
+		mergeResult := ctx.Query("merge")
+		if mergeResult == "true" {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultString})
+		} else {
+			ctx.JSON(200, results)
 		}
 	})
 	handler.GET("/search", func(ctx *gin.Context) {
@@ -103,15 +103,15 @@ func main() {
 		}
 
 		// Return results
-		resultList := ctx.Query("list")
-		if resultList == "" || resultList == "true" {
-			ctx.JSON(200, results)
-		} else {
+		mergeResult := ctx.Query("merge")
+		if mergeResult == "true" {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultString})
+		} else {
+			ctx.JSON(200, results)
 		}
 	})
 
