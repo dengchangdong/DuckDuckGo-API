@@ -51,7 +51,7 @@ func main() {
 
 		// Return results
 		// default: ctx.JSON(200, results)
-		if search.List == "true" {
+		if list == "true" {
 			ctx.JSON(200, gin.H{"result": results})
 		} else {
 			var resultString string
@@ -104,8 +104,8 @@ func main() {
 
 		// Return results
 		// default: ctx.JSON(200, results)
-		search.List = ctx.Query("list")
-		if search.List == "true" {
+		list = ctx.Query("list")
+		if list == "true" {
 			ctx.JSON(200, gin.H{"result": results})
 		} else {
 			var resultString string
