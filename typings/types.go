@@ -5,6 +5,7 @@ type Search struct {
 	Region    string `json:"region"`
 	TimeRange string `json:"time_range"`
 	Limit     int    `json:"limit"`
+	List      bool   `json:"list"`
 }
 
 type Result struct {
