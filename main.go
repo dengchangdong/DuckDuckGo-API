@@ -31,14 +31,6 @@ func main() {
       return
     }
 
-    // Parse the "list" query parameter
-    list := ctx.DefaultQuery("list", "false")
-    resultList, err := strconv.ParseBool(list)
-    if err != nil {
-      ctx.JSON(400, gin.H{"error": "Invalid 'list' parameter"})
-      return
-    }
-
     // Ensure query is set
     if search.Query == "" {
       ctx.JSON(400, gin.H{"error": "Query is required"})
@@ -59,7 +51,8 @@ func main() {
 
     // Return results
     // default: ctx.JSON(200, results)
-    if resultList {
+    resultList := ctx.DefaultQuery("list", "false")
+    if resultList == "true" {
       ctx.JSON(200, gin.H{"result": results})
     } else {
       var resultString string
