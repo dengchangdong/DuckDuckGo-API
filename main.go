@@ -44,7 +44,7 @@ func main() {
 		}
 
 		// Return results
-		if search.Merge {
+		if search.Merge && search.Merge != nil {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
