@@ -44,12 +44,14 @@ func main() {
 		}
 
 		// Return results
-		if search.Merge && search.Merge != nil {
+		if search.Merge {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultString})
+		} else if _, err := strconv.ParseBool(search.Merge); err != nil {
+			ctx.JSON(200, gin.H{"result": results})
 		} else {
 			ctx.JSON(200, gin.H{"result": results})
 		}
