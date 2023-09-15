@@ -36,14 +36,6 @@ func main() {
         return
     }
 
-    // Check if merge parameter is set to true
-    mergeResult := ctx.DefaultQuery("merge", "false")
-    merge, err := strconv.ParseBool(mergeResult)
-    if err != nil {
-        ctx.JSON(400, gin.H{"error": "Invalid merge parameter value"})
-        return
-    }
-
     // Get results
     results, err := duckduckgo.Get_results(search)
     if err != nil {
@@ -54,6 +46,14 @@ func main() {
     // Limit
     if search.Limit > 0 && search.Limit < len(results) {
         results = results[:search.Limit]
+    }
+
+    // Check if merge parameter is set to true
+    mergeResult := ctx.DefaultQuery("merge", "false")
+    merge, err := strconv.ParseBool(mergeResult)
+    if err != nil {
+        ctx.JSON(400, gin.H{"error": "Invalid merge parameter value"})
+        return
     }
 
     // Return results based on merge parameter
