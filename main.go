@@ -49,10 +49,10 @@ func main() {
     }
 
     // Check if merge parameter is set to true
-    mergeResult := ctx.GetPostForm("merge")
+    mergeResult := ctx.DefaultPostForm("merge", "false")
     merge, err := strconv.ParseBool(mergeResult)
 	if err != nil {
-		c.JSON(400, gin.H{"error": "Invalid parameter"})
+		ctx.JSON(400, gin.H{"error": "Invalid parameter"})
 		return
 	}
 
@@ -71,14 +71,6 @@ func main() {
 
     // Map request to Search struct
     var search typings.Search
-
-    // Parse the "list" query parameter
-    list := ctx.DefaultQuery("list", "false")
-    resultList, err := strconv.ParseBool(list)
-    if err != nil {
-      ctx.JSON(400, gin.H{"error": "Invalid 'list' parameter"})
-      return
-    }
 
     // Get query
     search.Query = ctx.Query("query")
@@ -115,7 +107,6 @@ func main() {
     if search.Limit > 0 && search.Limit < len(results) {
       results = results[:search.Limit]
     }
-
 
     // Return results
     ctx.JSON(200, gin.H{"result": results})
