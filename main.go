@@ -23,43 +23,50 @@ func main() {
   })
 
   handler.POST("/search", func(ctx *gin.Context) {
-
     // Map request to Search struct
     var search typings.Search
     if err := ctx.ShouldBindJSON(&search); err != nil {
-      ctx.JSON(400, gin.H{"error": err.Error(), "details": "Could not bind JSON"})
-      return
+        ctx.JSON(400, gin.H{"error": err.Error(), "details": "Could not bind JSON"})
+        return
     }
 
     // Ensure query is set
     if search.Query == "" {
-      ctx.JSON(400, gin.H{"error": "Query is required"})
-      return
+        ctx.JSON(400, gin.H{"error": "Query is required"})
+        return
+    }
+
+    // Check if merge parameter is set to true
+    mergeResult := ctx.DefaultQuery("merge", "false")
+    merge, err := strconv.ParseBool(mergeResult)
+    if err != nil {
+        ctx.JSON(400, gin.H{"error": "Invalid merge parameter value"})
+        return
     }
 
     // Get results
     results, err := duckduckgo.Get_results(search)
     if err != nil {
-      ctx.JSON(500, gin.H{"error": err.Error()})
-      return
+        ctx.JSON(500, gin.H{"error": err.Error()})
+        return
     }
 
     // Limit
     if search.Limit > 0 && search.Limit < len(results) {
-      results = results[:search.Limit]
+        results = results[:search.Limit]
     }
 
-    // Return results
-    // default: ctx.JSON(200, results)
-    resultList := ctx.DefaultQuery("list", "false")
-    if resultList == "true" {
-      ctx.JSON(200, gin.H{"result": results})
+    // Return results based on merge parameter
+    if merge {
+		} else {
+			var resultString string
+			for _, result := range results {
+				resultString += result.Snippet + "\n"
+			}
+			ctx.JSON(200, gin.H{"result": resultString})
+		}
     } else {
-      var resultString string
-      for _, result := range results {
-        resultString += result.Snippet + "\n"
-      }
-      ctx.JSON(200, gin.H{"result": resultString})
+        ctx.JSON(200, gin.H{"result": results})
     }
   })
   handler.GET("/search", func(ctx *gin.Context) {
@@ -111,17 +118,9 @@ func main() {
       results = results[:search.Limit]
     }
 
+
     // Return results
-    // default: ctx.JSON(200, results)
-    if resultList {
-      ctx.JSON(200, gin.H{"result": results})
-    } else {
-      var resultString string
-      for _, result := range results {
-        resultString += result.Snippet + "\n"
-      }
-      ctx.JSON(200, gin.H{"result": resultString})
-    }
+    ctx.JSON(200, gin.H{"result": results})
   })
 
   endless.ListenAndServe(HOST+":"+PORT, handler)
