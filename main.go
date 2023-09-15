@@ -58,13 +58,11 @@ func main() {
 
     // Return results based on merge parameter
     if merge {
-		} else {
-			var resultString string
-			for _, result := range results {
-				resultString += result.Snippet + "\n"
-			}
-			ctx.JSON(200, gin.H{"result": resultString})
+		var resultString string
+		for _, result := range results {
+			resultString += result.Snippet + "\n"
 		}
+		ctx.JSON(200, gin.H{"result": resultString})
     } else {
         ctx.JSON(200, gin.H{"result": results})
     }
