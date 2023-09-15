@@ -49,7 +49,8 @@ func main() {
     }
 
     // Check if merge parameter is set to true
-    merge := ctx.DefaultPostForm("merge", "false")
+    mergeResult := ctx.DefaultPostForm("merge", "false")
+	merge, err := strconv.ParseBool(mergeResult)
 
     // Return results based on merge parameter
     if merge {
