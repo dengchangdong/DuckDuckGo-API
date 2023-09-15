@@ -45,13 +45,11 @@ func main() {
 
 		// Return results
 		if search.Merge {
-			var resultString string
+			var resultSnippet string
 			for _, result := range results {
-				resultString += result.Snippet + "\n"
+				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"result": resultString})
-		} else if _, err := strconv.ParseBool(search.Merge); err != nil {
-			ctx.JSON(200, gin.H{"result": results})
+			ctx.JSON(200, gin.H{"result": resultSnippet})
 		} else {
 			ctx.JSON(200, gin.H{"result": results})
 		}
@@ -92,11 +90,11 @@ func main() {
 		merge := ctx.DefaultQuery("merge", "false")
 		search.Merge, _ = strconv.ParseBool(merge)
 		if search.Merge {
-			var resultString string
+			var resultSnippet string
 			for _, result := range results {
-				resultString += result.Snippet + "\n"
+				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"result": resultString})
+			ctx.JSON(200, gin.H{"result": resultSnippet})
 		} else {
 			ctx.JSON(200, gin.H{"result": results})
 		}
