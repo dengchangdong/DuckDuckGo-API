@@ -49,14 +49,14 @@ func main() {
     }
 
     // Return results
-    if search.Merge == false {
-    	ctx.JSON(200, gin.H{"result": results})
-    } else {
+    if search.Merge == true {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultString})
+    } else {
+    	ctx.JSON(200, gin.H{"result": results})
     }
   })
   handler.GET("/search", func(ctx *gin.Context) {
@@ -101,14 +101,14 @@ func main() {
     }
 
     // Return results
-    if search.Merge == false {
-    	ctx.JSON(200, gin.H{"result": results})
-    } else {
+    if search.Merge == true {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultString})
+    } else {
+    	ctx.JSON(200, gin.H{"result": results})
     }
   })
 
