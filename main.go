@@ -29,7 +29,6 @@ func main() {
       ctx.JSON(400, gin.H{"error": err.Error(), "details": "Could not bind JSON"})
       return
     }
-    search := Search{Merge: false}
 
     // Ensure query is set
     if search.Query == "" {
@@ -50,14 +49,14 @@ func main() {
     }
 
     // Return results
-    if search.Merge == true {
+    if search.Merge == false {
+    	ctx.JSON(200, gin.H{"result": results})
+    } else {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultString})
-    } else {
-    	ctx.JSON(200, results)
     }
   })
   handler.GET("/search", func(ctx *gin.Context) {
@@ -102,7 +101,15 @@ func main() {
     }
 
     // Return results
-    ctx.JSON(200, gin.H{"result": results})
+    if search.Merge == false {
+    	ctx.JSON(200, gin.H{"result": results})
+    } else {
+			var resultString string
+			for _, result := range results {
+				resultString += result.Snippet + "\n"
+			}
+			ctx.JSON(200, gin.H{"result": resultString})
+    }
   })
 
   endless.ListenAndServe(HOST+":"+PORT, handler)
