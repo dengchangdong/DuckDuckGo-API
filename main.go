@@ -44,7 +44,7 @@ func main() {
 		}
 
 		// Return results
-		if search.Merge !="" && search.Merge == true {
+		if search.Merge == true {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
@@ -87,8 +87,8 @@ func main() {
 			results = results[:search.Limit]
 		}
 		// Return results
-		merge := ctx.DefaultQuery("merge", false)
-		if merge !="" && merge == true {
+		search.Merge := ctx.DefaultQuery("merge", false)
+		if search.Merge == true {
 			var resultString string
 			for _, result := range results {
 				resultString += result.Snippet + "\n"
