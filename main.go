@@ -48,19 +48,15 @@ func main() {
         results = results[:search.Limit]
     }
 
-    // Check if merge parameter is set to true
-    mergeResult := ctx.DefaultPostForm("merge", "false")
-	merge, err := strconv.ParseBool(mergeResult)
-
     // Return results based on merge parameter
-    if merge {
+    if search.List && search.List == true {
 		var resultString string
 		for _, result := range results {
 			resultString += result.Snippet + "\n"
 		}
 		ctx.JSON(200, gin.H{"result": resultString})
     } else {
-        ctx.JSON(200, gin.H{"result": results})
+        ctx.JSON(200, results)
     }
   })
   handler.GET("/search", func(ctx *gin.Context) {
