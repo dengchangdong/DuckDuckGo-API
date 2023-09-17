@@ -44,9 +44,6 @@ func main() {
 		}
 
 		// Return results
-		 if search.Merge == (typings.Search{}).Merge {
-	        search.Merge = false
-	    }
 		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
