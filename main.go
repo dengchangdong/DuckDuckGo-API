@@ -51,7 +51,7 @@ func main() {
 			}
 			ctx.JSON(200, gin.H{"results": resultSnippet})
 		} else {
-			if _, err != nil {
+			if err != nil {
 				ctx.JSON(200, results)
 				return
 			}
