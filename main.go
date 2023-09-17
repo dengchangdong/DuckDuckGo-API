@@ -50,9 +50,11 @@ func main() {
 				resultSnippet += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"results": resultSnippet})
-		} else if search.Merge == nil {
-			ctx.JSON(200, results)
 		} else {
+			if _, err != nil {
+				ctx.JSON(200, results)
+				return
+			}
 			ctx.JSON(200, results)
 		}
 	})
