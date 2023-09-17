@@ -44,7 +44,7 @@ func main() {
 		}
 
 		// Return results
-		search.Merge := ctx.DefaultQuery("merge", "false")
+		search.Merge = ctx.DefaultQuery("merge", "false")
 		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
