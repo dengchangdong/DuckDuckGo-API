@@ -89,7 +89,7 @@ func main() {
 			results = results[:search.Limit]
 		}
 		// Return results
-		merge := ctx.DefaultQuery("merge", false)
+		merge := ctx.DefaultQuery("merge", "false")
 		search.Merge, _ = strconv.ParseBool(merge)
 		if search.Merge {
 			var resultSnippet string
