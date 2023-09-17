@@ -44,6 +44,9 @@ func main() {
 		}
 
 		// Return results
+		 if search.Merge == (typings.Search{}).Merge {
+	        search.Merge = false
+	    }
 		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
@@ -51,10 +54,6 @@ func main() {
 			}
 			ctx.JSON(200, gin.H{"results": resultSnippet})
 		} else {
-			if err != nil {
-				ctx.JSON(200, results)
-				return
-			}
 			ctx.JSON(200, results)
 		}
 	})
