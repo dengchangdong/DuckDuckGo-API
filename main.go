@@ -44,7 +44,8 @@ func main() {
 		}
 
 		// Return results
-		search.Merge = ctx.DefaultQuery("merge", "false")
+		merge := ctx.DefaultPostForm("merge", "false")
+		search.Merge, _ = strconv.ParseBool(merge)
 		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
