@@ -44,14 +44,13 @@ func main() {
 		}
 
 		// Return results
+		search.Merge := ctx.DefaultQuery("merge", "false")
 		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"result": resultSnippet})
-		} else if search.Merge == false {
-			ctx.JSON(200, results)
+			ctx.JSON(200, gin.H{"results": resultSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
@@ -96,7 +95,7 @@ func main() {
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"result": resultSnippet})
+			ctx.JSON(200, gin.H{"results": resultSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
