@@ -50,8 +50,10 @@ func main() {
 				resultSnippet += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"result": resultSnippet})
+		} else if search.Merge == false {
+			ctx.JSON(200, results)
 		} else {
-			ctx.JSON(200, gin.H{"result": results})
+			ctx.JSON(200, results)
 		}
 	})
 	handler.GET("/search", func(ctx *gin.Context) {
@@ -87,7 +89,7 @@ func main() {
 			results = results[:search.Limit]
 		}
 		// Return results
-		merge := ctx.DefaultQuery("merge", "false")
+		merge := ctx.DefaultQuery("merge", false)
 		search.Merge, _ = strconv.ParseBool(merge)
 		if search.Merge {
 			var resultSnippet string
@@ -96,7 +98,7 @@ func main() {
 			}
 			ctx.JSON(200, gin.H{"result": resultSnippet})
 		} else {
-			ctx.JSON(200, gin.H{"result": results})
+			ctx.JSON(200, results)
 		}
 	})
 
