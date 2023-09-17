@@ -44,13 +44,14 @@ func main() {
 		}
 
 		// Return results
-		merge := ctx.GetPostForm("merge")
-		if merge {
+		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
 			ctx.JSON(200, gin.H{"results": resultSnippet})
+		} else if search.Merge == nil {
+			ctx.JSON(200, results)
 		} else {
 			ctx.JSON(200, results)
 		}
@@ -88,8 +89,9 @@ func main() {
 			results = results[:search.Limit]
 		}
 		// Return results
-		merge := ctx.GetQuery("merge")
-		if merge {
+		merge := ctx.DefaultQuery("merge", "false")
+		search.Merge, _ = strconv.ParseBool(merge)
+		if search.Merge {
 			var resultSnippet string
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
