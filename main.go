@@ -44,12 +44,12 @@ func main() {
 		}
 
 		// Return results
-		if search.Merge {
+		if search.Prompt {
 			var resultSnippet string
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": resultSnippet})
+			ctx.JSON(200, gin.H{"results": "根据网络搜索结果" + resultSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
@@ -87,14 +87,14 @@ func main() {
 			results = results[:search.Limit]
 		}
 		// Return results
-		merge := ctx.DefaultQuery("merge", "false")
-		search.Merge, _ = strconv.ParseBool(merge)
-		if search.Merge {
+		prompt := ctx.DefaultQuery("prompt", "false")
+		search.Prompt, _ = strconv.ParseBool(prompt)
+		if search.Prompt {
 			var resultSnippet string
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": resultSnippet})
+			ctx.JSON(200, gin.H{"results": "根据网络搜索结果" + resultSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
