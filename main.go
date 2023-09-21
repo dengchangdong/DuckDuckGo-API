@@ -45,11 +45,11 @@ func main() {
 
 		// Return results
 		if search.Prompt {
-			var resultSnippet string
+			var allSnippet string
 			for _, result := range results {
-				resultSnippet += result.Snippet + "\n"
+				allSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": "网络搜索结果：" + resultSnippet})
+			ctx.JSON(200, gin.H{"prompt": "网络搜索内容：" + allSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
@@ -90,11 +90,11 @@ func main() {
 		prompt := ctx.DefaultQuery("prompt", "false")
 		search.Prompt, _ = strconv.ParseBool(prompt)
 		if search.Prompt {
-			var resultSnippet string
+			var allSnippet string
 			for _, result := range results {
-				resultSnippet += result.Snippet + "\n"
+				allSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": "网络搜索结果：" + resultSnippet})
+			ctx.JSON(200, gin.H{"prompt": "网络搜索内容：" + allSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
