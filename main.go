@@ -49,7 +49,7 @@ func main() {
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": "根据网络搜索结果" + resultSnippet})
+			ctx.JSON(200, gin.H{"results": "网络搜索结果：" + resultSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
@@ -94,7 +94,7 @@ func main() {
 			for _, result := range results {
 				resultSnippet += result.Snippet + "\n"
 			}
-			ctx.JSON(200, gin.H{"results": "根据网络搜索结果" + resultSnippet})
+			ctx.JSON(200, gin.H{"results": "网络搜索结果：" + resultSnippet})
 		} else {
 			ctx.JSON(200, results)
 		}
